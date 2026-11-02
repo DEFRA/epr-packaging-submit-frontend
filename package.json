@@ -1,7 +1,7 @@
 {
   "name": "epr-packaging-submit-frontend",
   "version": "0.0.0",
-  "description": "CDP Frontend Template",
+  "description": "EPR packaging submit data frontend",
   "sideEffects": false,
   "main": "src/index.js",
   "type": "module",
