@@ -207,34 +207,13 @@ export const config = convict({
       default: isDevelopment
     }
   },
-  // Backend APIs. The local defaults match the backends' Developer client and are not used in
+  // Backend API. The local defaults match the backend's Developer client and are not used in
   // production (CDP), where a missing setting must fail loudly rather than fall back to them.
-  packagingDataApi: {
-    baseUrl: {
-      doc: 'EPR packaging data API base URL',
-      format: String,
-      default: isProduction ? '' : 'http://localhost:8085',
-      env: 'EPR_PACKAGING_DATA_API_BASE_URL'
-    },
-    clientId: {
-      doc: 'Client ID this frontend uses to call the EPR packaging data API (its Acl:Clients entry)',
-      format: String,
-      default: isProduction ? '' : 'Developer',
-      env: 'EPR_PACKAGING_DATA_API_CLIENT_ID'
-    },
-    clientSecret: {
-      doc: 'API key (client secret) for the EPR packaging data API. Set as a CDP secret',
-      format: String,
-      default: isProduction ? '' : 'developer-pwd',
-      env: 'EPR_PACKAGING_DATA_API_CLIENT_SECRET',
-      sensitive: true
-    }
-  },
   wasteSubmitRegPackagingApi: {
     baseUrl: {
       doc: 'Waste submit reg packaging API base URL',
       format: String,
-      default: isProduction ? '' : 'http://localhost:8086',
+      default: isProduction ? '' : 'http://localhost:8085',
       env: 'WASTE_SUBMIT_REG_PACKAGING_API_BASE_URL'
     },
     clientId: {

@@ -1,11 +1,6 @@
 import { config } from '#/config/config.js'
 import { BaseApiService } from './base/base-api.service.js'
 
-export const PACKAGING_DATA_API = {
-  name: 'epr-packaging-data-api',
-  configKey: 'packagingDataApi'
-}
-
 export const WASTE_SUBMIT_REG_PACKAGING_API = {
   name: 'waste-submit-reg-packaging-api',
   configKey: 'wasteSubmitRegPackagingApi'

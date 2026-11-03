@@ -4,7 +4,7 @@ describe('#contentSecurityPolicy', () => {
   let server
 
   beforeAll(async () => {
-    // The home page calls the backends; keep this test off the network.
+    // The home page calls the backend; keep this test off the network.
     vi.stubGlobal(
       'fetch',
       vi.fn().mockResolvedValue(new Response(null, { status: 503 }))

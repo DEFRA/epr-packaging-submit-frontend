@@ -1,13 +1,9 @@
 import {
   createBackendApiService,
-  PACKAGING_DATA_API,
   WASTE_SUBMIT_REG_PACKAGING_API
 } from '#/server/services/backend-api.service.js'
 
-const defaultBackends = [
-  PACKAGING_DATA_API,
-  WASTE_SUBMIT_REG_PACKAGING_API
-].map((backend) => ({
+const defaultBackends = [WASTE_SUBMIT_REG_PACKAGING_API].map((backend) => ({
   name: backend.name,
   create: () => createBackendApiService(backend)
 }))

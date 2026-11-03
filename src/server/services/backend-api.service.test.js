@@ -1,10 +1,9 @@
 import {
   createBackendApiService,
-  PACKAGING_DATA_API,
   WASTE_SUBMIT_REG_PACKAGING_API
 } from './backend-api.service.js'
 
-describe.each([PACKAGING_DATA_API, WASTE_SUBMIT_REG_PACKAGING_API])(
+describe.each([WASTE_SUBMIT_REG_PACKAGING_API])(
   '#createBackendApiService($name)',
   (backend) => {
     test('describe() calls GET /describe and returns the service name', async () => {

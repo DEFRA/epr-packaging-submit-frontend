@@ -73,38 +73,33 @@ No additional proxy configuration is required in the service.
 
 ## Backend APIs and service-to-service authentication
 
-The frontend calls its backends server side (never from the browser), authenticating with an API key sent as HTTP
+The frontend calls its backend server side (never from the browser), authenticating with an API key sent as HTTP
 Basic credentials (`Authorization: Basic base64(clientId:secret)`). This follows the Manage Obligations service
-([DEFRA/waste-obligations-frontend](https://github.com/DEFRA/waste-obligations-frontend)). See the backends' READMEs
-for the access control list each one checks.
+([DEFRA/waste-obligations-frontend](https://github.com/DEFRA/waste-obligations-frontend)). See the backend's README
+for the access control list it checks.
 
 | Backend                                                                                   | Config                       | Environment variables                                                                                                                 |
 | ----------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| [epr-packaging-data-api](https://github.com/DEFRA/epr-packaging-data-api)                 | `packagingDataApi`           | `EPR_PACKAGING_DATA_API_BASE_URL`, `EPR_PACKAGING_DATA_API_CLIENT_ID`, `EPR_PACKAGING_DATA_API_CLIENT_SECRET`                         |
 | [waste-submit-reg-packaging-api](https://github.com/DEFRA/waste-submit-reg-packaging-api) | `wasteSubmitRegPackagingApi` | `WASTE_SUBMIT_REG_PACKAGING_API_BASE_URL`, `WASTE_SUBMIT_REG_PACKAGING_API_CLIENT_ID`, `WASTE_SUBMIT_REG_PACKAGING_API_CLIENT_SECRET` |
 
 In CDP:
 
-- Base URLs and client ids (`EprPackagingSubmitFrontend`) go in app config.
-- The `*_CLIENT_SECRET` values are **CDP secrets**. Each must match the backend's `Acl__Clients__EprPackagingSubmitFrontend__Secret`.
+- The base URL and client id (`EprPackagingSubmitFrontend`) go in app config.
+- `WASTE_SUBMIT_REG_PACKAGING_API_CLIENT_SECRET` is a **CDP secret**. It must match the backend's `Acl__Clients__EprPackagingSubmitFrontend__Secret`.
 
-The home page calls each backend's authenticated `GET /describe` endpoint. It shows **Healthy** when the backend
+The home page calls the backend's authenticated `GET /describe` endpoint. It shows **Healthy** when the backend
 accepts our credentials, and **Unavailable** when it is unreachable or refuses them. Each failure is logged as a
 warning, and the page still renders.
 
 `/health` never requires authentication and never calls a backend. CDP polls it.
 
-Outside production, the defaults match the backends' `Developer` client (`Developer` / `developer-pwd`) on localhost. In
-production (CDP) there are no defaults, so a missing setting shows the backend as **Unavailable** and logs that it is not
-configured. Both backends listen on
-port 8085 by default, so run waste-submit-reg-packaging-api on 8086:
+Outside production, the defaults match the backend's `Developer` client (`Developer` / `developer-pwd`) on
+`http://localhost:8085`, its default port. In production (CDP) there are no defaults, so a missing setting shows the
+backend as **Unavailable** and logs that it is not configured. To run it locally:
 
 ```bash
-# in epr-packaging-data-api
-dotnet run --project EprPackagingDataApi
 # in waste-submit-reg-packaging-api
-ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URLS=http://localhost:8086 \
-  dotnet run --project WasteSubmitRegPackagingApi --no-launch-profile
+dotnet run --project WasteSubmitRegPackagingApi
 ```
 
 ## Local Development
