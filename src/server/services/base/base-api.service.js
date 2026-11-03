@@ -33,7 +33,7 @@ export class BaseApiService {
     }
 
     this.serviceName = serviceName
-    this.baseUrl = baseUrl.replace(/\/+$/, '')
+    this.baseUrl = trimTrailingSlashes(baseUrl)
     this.timeoutMs = timeoutMs
     this.fetchImpl = fetchImpl
     this.#authorization = `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
@@ -60,12 +60,35 @@ export class BaseApiService {
     }
 
     if (!response.ok) {
+      // Release the connection rather than leaving the unread body to garbage collection.
+      await response.body?.cancel().catch(() => {})
       throw new ApiError(
         `${this.serviceName} request to ${path} returned ${response.status}`,
         { serviceName: this.serviceName, path, status: response.status }
       )
     }
 
-    return response.json()
+    try {
+      return await response.json()
+    } catch (error) {
+      throw new ApiError(
+        `${this.serviceName} response from ${path} was not valid JSON`,
+        {
+          serviceName: this.serviceName,
+          path,
+          status: response.status,
+          cause: error
+        }
+      )
+    }
   }
+}
+
+/** Loop rather than regex, which Sonar flags as a slow-regex hotspot. */
+function trimTrailingSlashes(value) {
+  let end = value.length
+  while (end > 0 && value[end - 1] === '/') {
+    end -= 1
+  }
+  return value.slice(0, end)
 }

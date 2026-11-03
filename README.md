@@ -94,7 +94,9 @@ warning, and the page still renders.
 
 `/health` never requires authentication and never calls a backend. CDP polls it.
 
-Locally, the defaults match the backends' `Developer` client (`Developer` / `developer-pwd`). Both backends listen on
+Outside production, the defaults match the backends' `Developer` client (`Developer` / `developer-pwd`) on localhost. In
+production (CDP) there are no defaults, so a missing setting shows the backend as **Unavailable** and logs that it is not
+configured. Both backends listen on
 port 8085 by default, so run waste-submit-reg-packaging-api on 8086:
 
 ```bash

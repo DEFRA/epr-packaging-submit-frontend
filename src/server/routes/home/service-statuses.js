@@ -1,19 +1,16 @@
 import {
-  createPackagingDataApiService,
-  PACKAGING_DATA_API_NAME
-} from '#/server/services/packaging-data-api.service.js'
-import {
-  createWasteSubmitRegPackagingApiService,
-  WASTE_SUBMIT_REG_PACKAGING_API_NAME
-} from '#/server/services/waste-submit-reg-packaging-api.service.js'
+  createBackendApiService,
+  PACKAGING_DATA_API,
+  WASTE_SUBMIT_REG_PACKAGING_API
+} from '#/server/services/backend-api.service.js'
 
 const defaultBackends = [
-  { name: PACKAGING_DATA_API_NAME, create: createPackagingDataApiService },
-  {
-    name: WASTE_SUBMIT_REG_PACKAGING_API_NAME,
-    create: createWasteSubmitRegPackagingApiService
-  }
-]
+  PACKAGING_DATA_API,
+  WASTE_SUBMIT_REG_PACKAGING_API
+].map((backend) => ({
+  name: backend.name,
+  create: () => createBackendApiService(backend)
+}))
 
 /**
  * Calls each backend's authenticated GET /describe endpoint, proving service-to-service
@@ -29,15 +26,19 @@ export async function getServiceStatuses(logger, backends = defaultBackends) {
     const { name } = backends[index]
 
     if (result.status === 'fulfilled') {
-      return { name: result.value, healthy: true }
+      return { name: result.value || name, healthy: true }
     }
 
+    const { reason } = result
+    const cause = reason?.cause
     logger.warn(
       {
         error: {
-          message: result.reason?.message,
-          type: result.reason?.name,
-          code: result.reason?.status
+          message: cause?.message
+            ? `${reason.message}: ${cause.message}`
+            : reason?.message,
+          type: cause?.name ?? reason?.name,
+          code: reason?.status ?? cause?.code ?? cause?.cause?.code
         }
       },
       `Backend ${name} is unavailable`

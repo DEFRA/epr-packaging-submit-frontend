@@ -68,6 +68,42 @@ describe('#BaseApiService', () => {
     expect(error.cause).toBeInstanceOf(TypeError)
   })
 
+  test('Should cancel the body of a refused response', async () => {
+    const response = new Response('refused', { status: 401 })
+    const cancel = vi.spyOn(response.body, 'cancel')
+    const api = new BaseApiService({
+      ...options,
+      fetchImpl: vi.fn().mockResolvedValue(response)
+    })
+
+    await expect(api.getJson('/describe')).rejects.toBeInstanceOf(ApiError)
+    expect(cancel).toHaveBeenCalled()
+  })
+
+  test('Should throw an ApiError when a successful response is not JSON', async () => {
+    const fetchImpl = vi
+      .fn()
+      .mockResolvedValue(new Response('<html></html>', { status: 200 }))
+    const api = new BaseApiService({ ...options, fetchImpl })
+
+    const error = await api.getJson('/describe').catch((e) => e)
+
+    expect(error).toBeInstanceOf(ApiError)
+    expect(error.message).toBe(
+      'test-api response from /describe was not valid JSON'
+    )
+    expect(error.cause).toBeInstanceOf(SyntaxError)
+  })
+
+  test('Should trim every trailing slash from the base URL', () => {
+    const api = new BaseApiService({
+      ...options,
+      baseUrl: 'http://backend.test///'
+    })
+
+    expect(api.baseUrl).toBe('http://backend.test')
+  })
+
   test.each(['baseUrl', 'clientId', 'clientSecret'])(
     'Should refuse to be created without %s',
     (key) => {

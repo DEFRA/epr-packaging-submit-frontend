@@ -48,6 +48,37 @@ describe('#getServiceStatuses', () => {
     )
   })
 
+  test('Should fall back to the configured name when the backend does not name itself', async () => {
+    const statuses = await getServiceStatuses(logger, [
+      backend('a', async () => undefined)
+    ])
+
+    expect(statuses).toEqual([{ name: 'a', healthy: true }])
+  })
+
+  test('Should log the cause of a network failure', async () => {
+    const cause = Object.assign(new TypeError('fetch failed'), {
+      cause: { code: 'ECONNREFUSED' }
+    })
+
+    await getServiceStatuses(logger, [
+      backend('a', async () => {
+        throw new ApiError('a request to /describe failed', { cause })
+      })
+    ])
+
+    expect(logger.warn).toHaveBeenCalledWith(
+      {
+        error: {
+          message: 'a request to /describe failed: fetch failed',
+          type: 'TypeError',
+          code: 'ECONNREFUSED'
+        }
+      },
+      'Backend a is unavailable'
+    )
+  })
+
   test('Should report a misconfigured backend as unavailable rather than failing', async () => {
     const statuses = await getServiceStatuses(logger, [
       {
