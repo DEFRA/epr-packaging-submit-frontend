@@ -207,6 +207,54 @@ export const config = convict({
       default: isDevelopment
     }
   },
+  packagingDataApi: {
+    baseUrl: {
+      doc: 'EPR packaging data API base URL',
+      format: String,
+      default: 'http://localhost:8085',
+      env: 'EPR_PACKAGING_DATA_API_BASE_URL'
+    },
+    clientId: {
+      doc: 'Client ID this frontend uses to call the EPR packaging data API (its Acl:Clients entry)',
+      format: String,
+      default: 'Developer',
+      env: 'EPR_PACKAGING_DATA_API_CLIENT_ID'
+    },
+    clientSecret: {
+      doc: 'API key (client secret) for the EPR packaging data API. Set as a CDP secret',
+      format: String,
+      default: 'developer-pwd',
+      env: 'EPR_PACKAGING_DATA_API_CLIENT_SECRET',
+      sensitive: true
+    }
+  },
+  wasteSubmitRegPackagingApi: {
+    baseUrl: {
+      doc: 'Waste submit reg packaging API base URL',
+      format: String,
+      default: 'http://localhost:8086',
+      env: 'WASTE_SUBMIT_REG_PACKAGING_API_BASE_URL'
+    },
+    clientId: {
+      doc: 'Client ID this frontend uses to call the waste submit reg packaging API (its Acl:Clients entry)',
+      format: String,
+      default: 'Developer',
+      env: 'WASTE_SUBMIT_REG_PACKAGING_API_CLIENT_ID'
+    },
+    clientSecret: {
+      doc: 'API key (client secret) for the waste submit reg packaging API. Set as a CDP secret',
+      format: String,
+      default: 'developer-pwd',
+      env: 'WASTE_SUBMIT_REG_PACKAGING_API_CLIENT_SECRET',
+      sensitive: true
+    }
+  },
+  backendApiTimeoutMs: {
+    doc: 'Timeout in milliseconds for each call to a backend API',
+    format: 'nat',
+    default: 5000,
+    env: 'BACKEND_API_TIMEOUT_MS'
+  },
   tracing: {
     header: {
       doc: 'Which header to track',
