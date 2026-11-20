@@ -3,17 +3,22 @@
 
 {% set showBackLink = true %}
 {% set caption = caption | default("epr-packaging-submit-frontend") %}
+{% set headingSize = headingSize | default("l") %}
 {% set buttonText = buttonText | default("Continue") %}
 {% set buttonClasses = buttonClasses | default("") %}
 
 {% block content %}
-  <form method="{{ formMethod | default('post') }}" action="{{ formAction | default('#') }}" novalidate>
-    {% block formContent %}{% endblock %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="{{ formMethod | default('post') }}" action="{{ formAction | default('#') }}" novalidate>
+        {% block formContent %}{% endblock %}
 
-    {{ govukButton({
-      text: buttonText,
-      classes: buttonClasses,
-      type: "submit"
-    }) }}
-  </form>
+        {{ govukButton({
+          text: buttonText,
+          classes: buttonClasses,
+          type: "submit"
+        }) }}
+      </form>
+    </div>
+  </div>
 {% endblock %}

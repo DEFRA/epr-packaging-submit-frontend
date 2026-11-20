@@ -1,9 +1,11 @@
+{% set headingSize = params.size | default("xl") %}
+
 <div class="app-heading" data-testid="app-heading">
   {% if params.caption %}
-    <span class="govuk-caption-xl"
+    <span class="govuk-caption-{{ headingSize }}"
           data-testid="app-heading-caption">{{ params.caption }}</span>
   {% endif %}
 
-  <h1 class="govuk-heading-xl"
+  <h1 class="govuk-heading-{{ headingSize }}"
       data-testid="app-heading-title">{{ params.text }}</h1>
 </div>
