@@ -1,0 +1,20 @@
+import { exampleQuestionController } from './controller.js'
+
+/**
+ * Sets up the routes used in the /demo pages.
+ * These routes are registered in src/server/router.js.
+ */
+export const demo = {
+  plugin: {
+    name: 'demo',
+    register(server) {
+      server.route([
+        {
+          method: 'GET',
+          path: '/demo/example-question',
+          ...exampleQuestionController
+        }
+      ])
+    }
+  }
+}

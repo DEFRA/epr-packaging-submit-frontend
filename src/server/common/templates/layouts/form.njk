@@ -1,0 +1,18 @@
+{% extends "layouts/main.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set showBackLink = true %}
+{% set buttonText = buttonText | default("Continue") %}
+{% set buttonClasses = buttonClasses | default("") %}
+
+{% block content %}
+  <form method="{{ formMethod | default('post') }}" action="{{ formAction | default('#') }}" novalidate>
+    {% block formContent %}{% endblock %}
+
+    {{ govukButton({
+      text: buttonText,
+      classes: buttonClasses,
+      type: "submit"
+    }) }}
+  </form>
+{% endblock %}
