@@ -6,7 +6,16 @@ export const homeController = {
   handler(_request, h) {
     return h.view('home/index', {
       pageTitle: 'Home',
-      heading: 'Home'
+      heading: 'Home',
+      breadcrumbs: [
+        {
+          text: 'Packaging EPR',
+          href: '#'
+        },
+        {
+          text: 'Report packaging data'
+        }
+      ]
     })
   }
 }

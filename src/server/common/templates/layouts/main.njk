@@ -1,0 +1,50 @@
+{% extends "layouts/page.njk" %}
+
+{% block header %}
+  {% set signOutHtml %}
+    <ul class="govuk-service-navigation__list">
+      <li class="govuk-service-navigation__item">
+        <a class="govuk-service-navigation__link" href="#">
+          Sign out
+        </a>
+      </li>
+    </ul>
+  {% endset %}
+
+  {{ govukHeader() }}
+  {{ govukServiceNavigation({
+    serviceName: "Report Packaging data",
+    serviceUrl: homeUrl,
+    navigation: [
+      {
+        href: homeUrl,
+        text: "Home"
+      },
+      {
+        href: "#",
+        text: "Manage Account"
+      }
+    ],
+    slots: {
+      end: {
+        html: signOutHtml,
+        align: "inline"
+      }
+    }
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  <nav class="wce-language-toggle" aria-label="Language toggle">
+    <ul class="wce-language-toggle__list">
+      <li class="wce-language-toggle__list-item" aria-current="true">
+        English
+      </li>
+      <li class="wce-language-toggle__list-item">
+        <a href="#" hreflang="cy" lang="cy" rel="alternate" class="govuk-link">Cymraeg</a>
+      </li>
+    </ul>
+  </nav>
+
+  {{ super() }}
+{% endblock %}

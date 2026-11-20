@@ -1,17 +1,22 @@
-{% extends 'layouts/page.njk' %}
+{% extends 'layouts/main.njk' %}
+
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Beta"
+    },
+    html: 'This is a new service – your <a class="govuk-link" rel="noreferrer noopener" target="_blank" href="https://defragroup.eu.qualtrics.com/jfe/form/SV_a2Bm7vw3cht5B6C">feedback</a> will help us to improve it.'
+  }) }}
+
+  {{ super() }}
+{% endblock %}
 
 {% block content %}
   {{ appHeading({
     text: heading,
     caption: "epr-packaging-submit-frontend"
   }) }}
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <div class="govuk-body" data-testid="app-page-body">
-        <p></p>
-      </div>
-    </div>
-  </div>
 
 {% endblock %}
