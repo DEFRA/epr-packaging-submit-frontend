@@ -1,4 +1,7 @@
-import { exampleQuestionController } from './controller.js'
+import {
+  exampleHomeController,
+  exampleQuestionController
+} from './controller.js'
 
 /**
  * Sets up the routes used in the /demo pages.
@@ -13,6 +16,11 @@ export const demo = {
           method: 'GET',
           path: '/demo/example-question',
           ...exampleQuestionController
+        },
+        {
+          method: 'GET',
+          path: '/demo/example-home',
+          ...exampleHomeController
         }
       ])
     }

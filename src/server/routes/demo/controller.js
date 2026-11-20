@@ -11,3 +11,42 @@ export const exampleQuestionController = {
     })
   }
 }
+
+const exampleHomeHeadings = [
+  'Report your packaging data',
+  'Check your organisation details',
+  'Review your submission history',
+  'Manage your account settings',
+  'View your packaging obligations'
+]
+
+/**
+ * Demo example-home page controller.
+ * Provided as an example of the main layout with breadcrumbs, remove or modify as required.
+ */
+export const exampleHomeController = {
+  handler(_request, h) {
+    const heading =
+      exampleHomeHeadings[
+        Math.floor(Math.random() * exampleHomeHeadings.length)
+      ]
+
+    return h.view('demo/example-home', {
+      pageTitle: heading,
+      heading,
+      showBreadcrumbs: true,
+      breadcrumbs: [
+        {
+          text: 'Packaging EPR',
+          href: '/'
+        },
+        {
+          text: 'Demo'
+        },
+        {
+          text: heading
+        }
+      ]
+    })
+  }
+}
