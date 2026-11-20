@@ -2,6 +2,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set showBackLink = true %}
+{% set caption = caption | default("epr-packaging-submit-frontend") %}
 {% set buttonText = buttonText | default("Continue") %}
 {% set buttonClasses = buttonClasses | default("") %}
 
