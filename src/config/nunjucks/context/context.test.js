@@ -59,6 +59,10 @@ describe('context and cache', () => {
         expect(contextResult).toMatchObject({
           assetPath: '/public/assets',
           breadcrumbs: [],
+          showBreadcrumbs: false,
+          showBackLink: false,
+          backLinkText: 'Back',
+          backLinkHref: '#',
           getAssetPath: expect.any(Function),
           navigation: [
             {
@@ -148,6 +152,10 @@ describe('context and cache', () => {
         expect(contextResult).toMatchObject({
           assetPath: '/public/assets',
           breadcrumbs: [],
+          showBreadcrumbs: false,
+          showBackLink: false,
+          backLinkText: 'Back',
+          backLinkHref: '#',
           getAssetPath: expect.any(Function),
           navigation: [
             {

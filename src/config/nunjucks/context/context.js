@@ -35,6 +35,10 @@ export function context(request) {
     cookieName: config.get('cookieConsent.name'),
     googleTagManagerKey,
     breadcrumbs: [],
+    showBreadcrumbs: false,
+    showBackLink: false,
+    backLinkText: 'Back',
+    backLinkHref: '#',
     navigation: buildNavigation(request),
     getAssetPath(asset) {
       if (!config.get('isProduction')) {
