@@ -1,0 +1,29 @@
+{% extends "layouts/form.njk" %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% block formContent %}
+  {{ govukRadios({
+    name: "packagingType",
+    fieldset: {
+      legend: {
+        text: heading,
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--" + headingSize
+      }
+    },
+    items: [
+      {
+        value: "primary",
+        text: "Primary packaging"
+      },
+      {
+        value: "secondary",
+        text: "Secondary packaging"
+      },
+      {
+        value: "transit",
+        text: "Transit packaging"
+      }
+    ]
+  }) }}
+{% endblock %}

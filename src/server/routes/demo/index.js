@@ -1,6 +1,7 @@
 import {
   exampleHomeController,
-  exampleQuestionController
+  exampleQuestionController,
+  exampleQuestionLegendController
 } from './controller.js'
 
 /**
@@ -16,6 +17,11 @@ export const demo = {
           method: 'GET',
           path: '/demo/example-question',
           ...exampleQuestionController
+        },
+        {
+          method: 'GET',
+          path: '/demo/example-question-legend',
+          ...exampleQuestionLegendController
         },
         {
           method: 'GET',
