@@ -1,7 +1,11 @@
 {% extends "layouts/page.njk" %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
-{% block header %}
+{% block govukHeader %}
+  {{ govukHeader() }}
+{% endblock %}
+
+{% block govukServiceNavigation %}
   {% set signOutHtml %}
     <ul class="govuk-service-navigation__list">
       <li class="govuk-service-navigation__item">
@@ -12,7 +16,6 @@
     </ul>
   {% endset %}
 
-  {{ govukHeader() }}
   {{ govukServiceNavigation({
     serviceName: "Report packaging data",
     serviceUrl: homeUrl,
@@ -35,14 +38,16 @@
   }) }}
 {% endblock %}
 
-{% block beforeContent %}
+{% block headerEnd %}
   {{ govukPhaseBanner({
     tag: {
       text: "Beta"
     },
     html: 'This is a new service – your <a class="govuk-link" rel="noreferrer noopener" target="_blank" href="https://defragroup.eu.qualtrics.com/jfe/form/SV_a2Bm7vw3cht5B6C">feedback</a> will help us to improve it.'
   }) }}
+{% endblock %}
 
+{% block beforeContent %}
   <nav class="wce-language-toggle" aria-label="Language toggle">
     <ul class="wce-language-toggle__list">
       <li class="wce-language-toggle__list-item" aria-current="true">
