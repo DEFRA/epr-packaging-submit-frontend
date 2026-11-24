@@ -3,8 +3,7 @@
 .app-heading {
   margin-bottom: govuk-spacing(4);
 
-  // Match govuk-grid-column-two-thirds width without using a floated
-  // grid column (floats interact badly with the language toggle).
+  // Match govuk-grid-column-two-thirds width without using a floated grid column.
   @include govuk-media-query($from: tablet) {
     max-width: govuk-grid-width(two-thirds);
   }

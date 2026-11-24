@@ -1,5 +1,24 @@
 {% extends "layouts/page.njk" %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "govuk/components/language-navigation/macro.njk" import govukLanguageNavigation %}
+
+{% set languageNavigationHtml %}
+  {{ govukLanguageNavigation({
+    items: [
+      {
+        text: "English",
+        lang: "en",
+        href: "#",
+        current: true
+      },
+      {
+        text: "Cymraeg",
+        lang: "cy",
+        href: "#"
+      }
+    ]
+  }) }}
+{% endset %}
 
 {% block govukServiceNavigation %}
   {{ govukServiceNavigation({
@@ -14,7 +33,13 @@
         href: "#",
         text: "Manage Account"
       }
-    ]
+    ],
+    slots: {
+      end: {
+        html: languageNavigationHtml,
+        align: "inline"
+      }
+    }
   }) }}
 {% endblock %}
 
@@ -25,19 +50,4 @@
     },
     html: 'This is a new service – your <a class="govuk-link" rel="noreferrer noopener" target="_blank" href="https://defragroup.eu.qualtrics.com/jfe/form/SV_a2Bm7vw3cht5B6C">feedback</a> will help us to improve it.'
   }) }}
-{% endblock %}
-
-{% block beforeContent %}
-  <nav class="wce-language-toggle" aria-label="Language toggle">
-    <ul class="wce-language-toggle__list">
-      <li class="wce-language-toggle__list-item" aria-current="true">
-        English
-      </li>
-      <li class="wce-language-toggle__list-item">
-        <a href="#" hreflang="cy" lang="cy" rel="alternate" class="govuk-link">Cymraeg</a>
-      </li>
-    </ul>
-  </nav>
-
-  {{ super() }}
 {% endblock %}
