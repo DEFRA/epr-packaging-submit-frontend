@@ -5,6 +5,7 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% from "service-header/service-header.njk" import govukOneLoginServiceHeader %}
 
 {# Import custom components globally #}
 {% from "heading/macro.njk" import appHeading %}
@@ -41,12 +42,19 @@
 {% endblock %}
 
 {% block govukHeader %}
-  {{ govukHeader({
-    homepageUrl: "https://www.gov.uk/",
-    classes: "app-header",
-    containerClasses: "govuk-width-container",
-    useTudorCrown: true
-  }) }}
+  {# The One Login header is shown here in development, and in production only when the request is authenticated. #}
+  {% if isDevelopment or isAuthenticated %}
+    {{ govukOneLoginServiceHeader({
+      signOutLink: "/oidc/logout"
+    }) }}
+  {% else %}
+    {{ govukHeader({
+      homepageUrl: "https://www.gov.uk/",
+      classes: "app-header",
+      containerClasses: "govuk-width-container",
+      useTudorCrown: true
+    }) }}
+  {% endif %}
 {% endblock %}
 
 {% block govukServiceNavigation %}
@@ -62,13 +70,12 @@
 {% endblock %}
 
 {% block beforeContent %}
+  {# GOV.UK Design System: do not show breadcrumbs and a back link together #}
   {% if showBreadcrumbs and breadcrumbs.length > 1 %}
     {{ govukBreadcrumbs({
       items: breadcrumbs
     }) }}
-  {% endif %}
-
-  {% if showBackLink %}
+  {% elif showBackLink %}
     {{ govukBackLink({
       text: backLinkText,
       href: backLinkHref

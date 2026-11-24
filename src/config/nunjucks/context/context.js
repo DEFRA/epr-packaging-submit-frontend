@@ -32,6 +32,8 @@ export function context(request) {
     assetPath: `${assetPath}/assets`,
     serviceName: config.get('serviceName'),
     serviceUrl: '/',
+    isAuthenticated: request?.auth?.isAuthenticated === true,
+    isDevelopment: config.get('isDevelopment'),
     cookieName: config.get('cookieConsent.name'),
     googleTagManagerKey,
     breadcrumbs: [],

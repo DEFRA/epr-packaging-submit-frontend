@@ -1,21 +1,7 @@
 {% extends "layouts/page.njk" %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
-{% block govukHeader %}
-  {{ govukHeader() }}
-{% endblock %}
-
 {% block govukServiceNavigation %}
-  {% set signOutHtml %}
-    <ul class="govuk-service-navigation__list">
-      <li class="govuk-service-navigation__item">
-        <a class="govuk-service-navigation__link" href="#">
-          Sign out
-        </a>
-      </li>
-    </ul>
-  {% endset %}
-
   {{ govukServiceNavigation({
     serviceName: "Report packaging data",
     serviceUrl: homeUrl,
@@ -28,13 +14,7 @@
         href: "#",
         text: "Manage Account"
       }
-    ],
-    slots: {
-      end: {
-        html: signOutHtml,
-        align: "inline"
-      }
-    }
+    ]
   }) }}
 {% endblock %}
 

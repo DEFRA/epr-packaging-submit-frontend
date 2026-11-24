@@ -6,6 +6,7 @@ import {
   Radios,
   SkipLink
 } from 'govuk-frontend'
+import { initCrossServiceHeader } from '@govuk-one-login/service-header'
 import cookies from './cookies.js'
 
 cookies.init()
@@ -15,3 +16,4 @@ createAll(Checkboxes)
 createAll(ErrorSummary)
 createAll(Radios)
 createAll(SkipLink)
+initCrossServiceHeader()
