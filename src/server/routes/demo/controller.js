@@ -1,69 +1,96 @@
-/**
- * Demo example-question page controller.
- * Provided as an example of the form layout (appHeading mode), remove or modify as required.
- */
-export const exampleQuestionController = {
-  handler(_request, h) {
-    return h.view('demo/example-question', {
-      pageTitle: 'Example question',
-      heading: 'Example question',
-      caption: 'epr-packaging-submit-frontend',
-      backLinkHref: '/'
-    })
-  }
-}
+const periodCaption = 'July to Dec 2026 (H2)'
 
 /**
- * Demo legend-as-page-heading question.
- * Caption comes from the form layout; the radios legend is the page h1.
+ * Demo home page.
+ * Account home for the packaging journey, with a breadcrumb back to Waste & Circular Economy.
  */
-export const exampleQuestionLegendController = {
+export const exampleHomePageController = {
   handler(_request, h) {
-    return h.view('demo/example-question-legend', {
-      pageTitle: 'What type of packaging are you reporting?',
-      heading: 'What type of packaging are you reporting?',
-      caption: 'epr-packaging-submit-frontend',
-      headingMode: 'legend',
-      backLinkHref: '/demo/example-question'
-    })
-  }
-}
-
-const exampleHomeHeadings = [
-  'Report your packaging data',
-  'Check your organisation details',
-  'Review your submission history',
-  'Manage your account settings',
-  'View your packaging obligations'
-]
-
-/**
- * Demo example-home page controller.
- * Provided as an example of the main layout with breadcrumbs, remove or modify as required.
- */
-export const exampleHomeController = {
-  handler(_request, h) {
-    const heading =
-      exampleHomeHeadings[
-        Math.floor(Math.random() * exampleHomeHeadings.length)
-      ]
-
-    return h.view('demo/example-home', {
-      pageTitle: heading,
-      heading,
+    return h.view('demo/example-home-page', {
+      pageTitle: 'EPR for packaging',
       showBreadcrumbs: true,
       breadcrumbs: [
         {
-          text: 'Packaging EPR',
-          href: '/'
+          text: 'Waste & Circular Economy',
+          href: '#'
         },
         {
-          text: 'Demo'
-        },
-        {
-          text: heading
+          text: 'EPR for packaging'
         }
       ]
+    })
+  }
+}
+
+/**
+ * Demo start page.
+ * Period comes from ?period= and defaults to 2026. The heading uses that value
+ * because the journey label map has no bare "2026" key.
+ */
+export const exampleStartPageController = {
+  handler(request, h) {
+    const period = request.query.period || '2026'
+    const heading = `Report packaging data for ${period}`
+
+    return h.view('demo/example-start-page', {
+      pageTitle: heading,
+      period
+    })
+  }
+}
+
+/**
+ * Demo question page.
+ * Warnings summary. The form layout supplies the caption, heading, back link, and Continue button.
+ */
+export const exampleQuestionPageController = {
+  handler(request, h) {
+    if (request.method === 'post') {
+      return h.redirect('/demo/example-question-button-mod')
+    }
+
+    return h.view('demo/example-question-page', {
+      pageTitle: 'Your file has 3 warnings',
+      heading: 'Your file has 3 warnings',
+      caption: periodCaption,
+      backLinkHref: '/demo/example-start-page?period=2026',
+      formAction: '/demo/example-question-page'
+    })
+  }
+}
+
+/**
+ * Demo question page with a different submit button.
+ * buttonText and preventDoubleClick are passed to the form layout; the button block is not overridden.
+ */
+export const exampleQuestionButtonModController = {
+  handler(request, h) {
+    if (request.method === 'post') {
+      return h.redirect('/demo/example-confirmation-page')
+    }
+
+    return h.view('demo/example-question-button-mod', {
+      pageTitle: 'Check your upload',
+      heading: 'Check your upload',
+      caption: periodCaption,
+      backLinkHref: '/demo/example-question-page',
+      formAction: '/demo/example-question-button-mod',
+      buttonText: 'Submit packaging data',
+      preventDoubleClick: true
+    })
+  }
+}
+
+/**
+ * Demo confirmation page.
+ * The panel is the page title. The form layout's submit button is removed.
+ */
+export const exampleConfirmationPageController = {
+  handler(_request, h) {
+    return h.view('demo/example-confirmation-page', {
+      pageTitle: 'Packaging report submitted',
+      headingMode: 'none',
+      showBackLink: false
     })
   }
 }

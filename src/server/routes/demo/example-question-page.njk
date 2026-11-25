@@ -1,0 +1,42 @@
+{% extends "layouts/form.njk" %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{% block formContent %}
+  <p class="govuk-body">Warnings are data advisories that do not stop you uploading your file. But they show data that may be wrong, so check them before you continue.</p>
+
+  <h2 class="govuk-heading-m">What you need to do</h2>
+  <ol class="govuk-list govuk-list--number">
+    <li>
+      <a class="govuk-link" href="#">Download the warnings file (CSV)</a>
+    </li>
+    <li>Check the warnings and fix anything that’s wrong</li>
+    <li>Upload a correct file or continue to upload the file with warnings</li>
+  </ol>
+
+  {{ govukWarningText({
+    text: "If you submit your data and need to correct it later, you may have to pay a resubmission fee.",
+    iconFallbackText: "Warning",
+    classes: "govuk-!-margin-top-6"
+  }) }}
+
+  {{ govukRadios({
+    name: "summary-decision",
+    fieldset: {
+      legend: {
+        text: "Do you want to continue uploading the file with warnings?",
+        classes: "govuk-fieldset__legend--m"
+      }
+    },
+    items: [
+      {
+        value: "yes",
+        text: "Yes"
+      },
+      {
+        value: "no",
+        text: "No"
+      }
+    ]
+  }) }}
+{% endblock %}

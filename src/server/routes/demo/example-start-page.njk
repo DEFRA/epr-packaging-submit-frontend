@@ -1,0 +1,34 @@
+{% extends "layouts/main.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Report packaging data for {{ period }}</h1>
+
+      <h2 class="govuk-heading-m">Before you start</h2>
+      <p class="govuk-body">Read the guidance on:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>
+          <a class="govuk-link" href="https://www.gov.uk/government/collections/extended-producer-responsibility-for-packaging" rel="noreferrer noopener" target="_blank">Extended producer responsibility for packaging guidance (opens in a new tab)</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="https://www.gov.uk/guidance/prepare-your-packaging-data-file" rel="noreferrer noopener" target="_blank">how to build a CSV file to report your packaging data (opens in a new tab)</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="https://www.legislation.gov.uk/uksi/2024/1332/contents" rel="noreferrer noopener" target="_blank">the Producer Responsibility Obligations (Packaging and Packaging Waste) Regulations 2024 (opens in a new tab)</a>
+        </li>
+      </ul>
+
+      <h2 class="govuk-heading-m">Using an AI assistant</h2>
+      <p class="govuk-body">You can use an AI assistant to help you understand what to report and check your file. Give it the guidance listed.</p>
+      <p class="govuk-body">You’re still responsible for making sure your data is accurate, so check what it tells you against the guidance.</p>
+
+      {{ govukButton({
+        text: "Start now",
+        href: "/demo/example-question-page",
+        isStartButton: true
+      }) }}
+    </div>
+  </div>
+{% endblock %}

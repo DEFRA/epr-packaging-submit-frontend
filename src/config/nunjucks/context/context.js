@@ -38,7 +38,8 @@ export function context(request) {
     googleTagManagerKey,
     breadcrumbs: [],
     showBreadcrumbs: false,
-    showBackLink: false,
+    // Leave showBackLink unset. layouts/form.njk defaults it to true, and a
+    // page sets false to hide the back link. page.njk treats an unset value as off.
     backLinkText: 'Back',
     backLinkHref: '#',
     navigation: buildNavigation(request),

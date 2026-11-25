@@ -1,0 +1,65 @@
+{% extends "layouts/form.njk" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{% block formContent %}
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: { text: "Report period" },
+        value: { text: "July to Dec 2026 (H2)" },
+        actions: {
+          items: [
+            {
+              href: "#",
+              text: "Change",
+              visuallyHiddenText: "reporting period"
+            }
+          ]
+        }
+      },
+      {
+        key: { text: "Uploaded file" },
+        value: { html: '<a class="govuk-link" href="#">packaging_data_example_file_v2.0 (5).csv</a>' },
+        actions: {
+          items: [
+            {
+              href: "#",
+              text: "Change",
+              visuallyHiddenText: "uploaded file"
+            }
+          ]
+        }
+      },
+      {
+        key: { text: "Warnings" },
+        value: { text: "3" }
+      },
+      {
+        key: { text: "Date and time uploaded" },
+        value: { text: "13 November 2026, 11:34am" }
+      },
+      {
+        key: { text: "Submitted by" },
+        value: { text: "Tony Jackson" }
+      }
+    ]
+  }) }}
+
+  {{ govukWarningText({
+    text: "Your organisation may face enforcement action if the data you submit is inaccurate.",
+    iconFallbackText: "Warning"
+  }) }}
+
+  {{ govukCheckboxes({
+    name: "packaging-data-confirmation",
+    idPrefix: "packaging-data-confirmation",
+    items: [
+      {
+        value: "confirmed",
+        text: "I confirm that the data I am submitting is accurate to the best of my knowledge."
+      }
+    ]
+  }) }}
+{% endblock %}

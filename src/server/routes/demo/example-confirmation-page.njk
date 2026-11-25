@@ -1,0 +1,26 @@
+{% extends "layouts/form.njk" %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+
+{% block formContent %}
+  {{ govukPanel({
+    titleText: "Packaging report submitted",
+    html: "July to December (2026-H2)"
+  }) }}
+
+  <p class="govuk-body">We have sent you a confirmation email.</p>
+
+  <h2 class="govuk-heading-m">What happens next</h2>
+  <p class="govuk-body">
+    We've sent your report to the regulator for approval. They will contact you if they need more information.
+  </p>
+  <p class="govuk-body">
+    You can view the status of your packaging report from <a class="govuk-link" href="/demo/example-home-page">Report packaging data</a>.
+  </p>
+  <p class="govuk-body">The regulator needs to approve your report before you can manage your obligations or view your waste disposal fees.</p>
+
+  <p class="govuk-body">
+    <a class="govuk-link" href="/demo/example-home-page">Return to EPR home</a>
+  </p>
+{% endblock %}
+
+{% block formButton %}{% endblock %}

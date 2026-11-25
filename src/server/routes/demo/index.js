@@ -1,7 +1,9 @@
 import {
-  exampleHomeController,
-  exampleQuestionController,
-  exampleQuestionLegendController
+  exampleConfirmationPageController,
+  exampleHomePageController,
+  exampleQuestionButtonModController,
+  exampleQuestionPageController,
+  exampleStartPageController
 } from './controller.js'
 
 /**
@@ -15,18 +17,28 @@ export const demo = {
       server.route([
         {
           method: 'GET',
-          path: '/demo/example-question',
-          ...exampleQuestionController
+          path: '/demo/example-home-page',
+          ...exampleHomePageController
         },
         {
           method: 'GET',
-          path: '/demo/example-question-legend',
-          ...exampleQuestionLegendController
+          path: '/demo/example-start-page',
+          ...exampleStartPageController
+        },
+        {
+          method: ['GET', 'POST'],
+          path: '/demo/example-question-page',
+          ...exampleQuestionPageController
+        },
+        {
+          method: ['GET', 'POST'],
+          path: '/demo/example-question-button-mod',
+          ...exampleQuestionButtonModController
         },
         {
           method: 'GET',
-          path: '/demo/example-home',
-          ...exampleHomeController
+          path: '/demo/example-confirmation-page',
+          ...exampleConfirmationPageController
         }
       ])
     }

@@ -9,16 +9,21 @@
       appHeading (default when heading is set) — caption + h1 via appHeading
       legend — caption only; page supplies h1 via fieldset legend isPageHeading
       none — neither caption nor appHeading (page owns the full title, e.g. confirmation)
+  - showBackLink defaults to true. The app context leaves it unset; a page sets
+    false to hide the back link (for example a confirmation page).
+  - preventDoubleClick defaults to false. Set it true to protect the submit
+    button without overriding the formButton block.
 #}
 {% extends "layouts/main.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% set showBackLink = true %}
+{% set showBackLink = true if showBackLink is not defined else showBackLink %}
 {% set caption = caption | default("epr-packaging-submit-frontend") %}
 {# Large (l): form questions match caption + heading; do not use xl here #}
 {% set headingSize = headingSize | default("l") %}
 {% set buttonText = buttonText | default("Continue") %}
 {% set buttonClasses = buttonClasses | default("") %}
+{% set preventDoubleClick = preventDoubleClick | default(false) %}
 {% if not headingMode %}
   {% set headingMode = "appHeading" if heading else "none" %}
 {% endif %}
@@ -27,6 +32,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form method="{{ formMethod | default('post') }}" action="{{ formAction | default('#') }}" novalidate>
+        <input type="hidden" name="crumb" value="{{ crumb }}">
         {% if headingMode == "appHeading" %}
           {{ appHeading({
             text: heading,
@@ -41,11 +47,20 @@
         {% block formContent %}{% endblock %}
 
         {% block formButton %}
-          {{ govukButton({
+          {% set button = {
             text: buttonText,
             classes: buttonClasses,
             type: "submit"
-          }) }}
+          } %}
+          {% if preventDoubleClick %}
+            {% set button = {
+              text: buttonText,
+              classes: buttonClasses,
+              type: "submit",
+              preventDoubleClick: true
+            } %}
+          {% endif %}
+          {{ govukButton(button) }}
         {% endblock %}
       </form>
     </div>
