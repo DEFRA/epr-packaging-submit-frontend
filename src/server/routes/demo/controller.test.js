@@ -55,6 +55,7 @@ describe('#demoControllers', () => {
 
     test('Should keep form chrome', () => {
       expect($('.govuk-back-link')).toHaveLength(1)
+      expect($('.govuk-breadcrumbs')).toHaveLength(0)
       expect($('.govuk-grid-column-two-thirds > form')).toHaveLength(1)
       expect(
         $('.govuk-grid-column-two-thirds button[type="submit"]').text().trim()
@@ -97,6 +98,30 @@ describe('#demoControllers', () => {
       ).toBe(true)
       expect($('.govuk-fieldset__legend--l')).toHaveLength(1)
       expect($('.govuk-caption-xl, .govuk-heading-xl')).toHaveLength(0)
+    })
+
+    test('Should show a back link without breadcrumbs', () => {
+      expect($('.govuk-back-link')).toHaveLength(1)
+      expect($('.govuk-breadcrumbs')).toHaveLength(0)
+    })
+  })
+
+  describe('GET /demo/example-home', () => {
+    let $
+
+    beforeAll(async () => {
+      const { result, statusCode } = await server.inject({
+        method: 'GET',
+        url: '/demo/example-home'
+      })
+
+      expect(statusCode).toBe(statusCodes.ok)
+      $ = load(result)
+    })
+
+    test('Should show breadcrumbs without a back link', () => {
+      expect($('.govuk-breadcrumbs')).toHaveLength(1)
+      expect($('.govuk-back-link')).toHaveLength(0)
     })
   })
 })
