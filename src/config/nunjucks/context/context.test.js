@@ -59,6 +59,9 @@ describe('context and cache', () => {
         expect(contextResult).toMatchObject({
           assetPath: '/public/assets',
           breadcrumbs: [],
+          showBreadcrumbs: false,
+          backLinkText: 'Back',
+          backLinkHref: '#',
           getAssetPath: expect.any(Function),
           navigation: [
             {
@@ -73,8 +76,19 @@ describe('context and cache', () => {
             }
           ],
           serviceName: 'epr-packaging-submit-frontend',
-          serviceUrl: '/'
+          serviceUrl: '/',
+          isAuthenticated: false,
+          isDevelopment: false
         })
+      })
+
+      test('Should mark the user as signed in when the request is authenticated', () => {
+        expect(
+          contextImport.context({
+            path: '/',
+            auth: { isAuthenticated: true }
+          }).isAuthenticated
+        ).toBe(true)
       })
 
       describe('With valid asset path', () => {
@@ -148,6 +162,9 @@ describe('context and cache', () => {
         expect(contextResult).toMatchObject({
           assetPath: '/public/assets',
           breadcrumbs: [],
+          showBreadcrumbs: false,
+          backLinkText: 'Back',
+          backLinkHref: '#',
           getAssetPath: expect.any(Function),
           navigation: [
             {
@@ -162,7 +179,9 @@ describe('context and cache', () => {
             }
           ],
           serviceName: 'epr-packaging-submit-frontend',
-          serviceUrl: '/'
+          serviceUrl: '/',
+          isAuthenticated: false,
+          isDevelopment: false
         })
       })
     })

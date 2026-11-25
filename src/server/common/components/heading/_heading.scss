@@ -1,8 +1,12 @@
 @use "govuk-frontend" as *;
 
 .app-heading {
-  display: flex;
   margin-bottom: govuk-spacing(4);
+
+  // Match govuk-grid-column-two-thirds width without using a floated grid column.
+  @include govuk-media-query($from: tablet) {
+    max-width: govuk-grid-width(two-thirds);
+  }
 }
 
 .app-heading-secondary-info {

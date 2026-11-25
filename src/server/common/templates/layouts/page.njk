@@ -1,8 +1,11 @@
 {% extends "govuk/template.njk" %}
 
 {# Import GOVUK components globally #}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% from "service-header/service-header.njk" import govukOneLoginServiceHeader %}
 
 {# Import custom components globally #}
 {% from "heading/macro.njk" import appHeading %}
@@ -38,18 +41,26 @@
   {% endif %}
 {% endblock %}
 
-{% block header %}
-  {# serviceName being used in govukHeader will be @deprecated in v6. It has moved to govukServiceNavigation - https://github.com/alphagov/govuk-frontend/blob/main/CHANGELOG.md#move-service-name-and-navigation-links-from-the-govuk-header-to-service-navigation-component #}
-  {{ govukHeader({
-    homepageUrl: "https://www.gov.uk/",
-    classes: "app-header",
-    containerClasses: "govuk-width-container",
+{% block govukHeader %}
+  {# The One Login header is shown here in development, and in production only when the request is authenticated. #}
+  {% if isDevelopment or isAuthenticated %}
+    {{ govukOneLoginServiceHeader({
+      signOutLink: "/oidc/logout"
+    }) }}
+  {% else %}
+    {{ govukHeader({
+      homepageUrl: "https://www.gov.uk/",
+      classes: "app-header",
+      containerClasses: "govuk-width-container",
+      useTudorCrown: true
+    }) }}
+  {% endif %}
+{% endblock %}
+
+{% block govukServiceNavigation %}
+  {{ govukServiceNavigation({
     serviceName: serviceName,
     serviceUrl: serviceUrl,
-    useTudorCrown: true
-  }) }}
-
-  {{ govukServiceNavigation({
     navigation: navigation
   }) }}
 {% endblock %}
@@ -59,9 +70,15 @@
 {% endblock %}
 
 {% block beforeContent %}
-  {% if breadcrumbs.length > 1 %}
+  {# GOV.UK Design System: do not show breadcrumbs and a back link together #}
+  {% if showBreadcrumbs and breadcrumbs.length > 1 %}
     {{ govukBreadcrumbs({
       items: breadcrumbs
+    }) }}
+  {% elif showBackLink %}
+    {{ govukBackLink({
+      text: backLinkText,
+      href: backLinkHref
     }) }}
   {% endif %}
 {% endblock %}

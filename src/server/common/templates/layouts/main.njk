@@ -1,0 +1,53 @@
+{% extends "layouts/page.njk" %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "govuk/components/language-navigation/macro.njk" import govukLanguageNavigation %}
+
+{% set languageNavigationHtml %}
+  {{ govukLanguageNavigation({
+    items: [
+      {
+        text: "English",
+        lang: "en",
+        href: "#",
+        current: true
+      },
+      {
+        text: "Cymraeg",
+        lang: "cy",
+        href: "#"
+      }
+    ]
+  }) }}
+{% endset %}
+
+{% block govukServiceNavigation %}
+  {{ govukServiceNavigation({
+    serviceName: "Report packaging data",
+    serviceUrl: homeUrl,
+    navigation: [
+      {
+        href: homeUrl,
+        text: "Home"
+      },
+      {
+        href: "#",
+        text: "Manage Account"
+      }
+    ],
+    slots: {
+      end: {
+        html: languageNavigationHtml,
+        align: "inline"
+      }
+    }
+  }) }}
+{% endblock %}
+
+{% block headerEnd %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Beta"
+    },
+    html: 'This is a new service – your <a class="govuk-link" rel="noreferrer noopener" target="_blank" href="https://defragroup.eu.qualtrics.com/jfe/form/SV_a2Bm7vw3cht5B6C">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}

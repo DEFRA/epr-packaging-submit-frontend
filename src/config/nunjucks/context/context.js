@@ -32,9 +32,16 @@ export function context(request) {
     assetPath: `${assetPath}/assets`,
     serviceName: config.get('serviceName'),
     serviceUrl: '/',
+    isAuthenticated: request?.auth?.isAuthenticated === true,
+    isDevelopment: config.get('isDevelopment'),
     cookieName: config.get('cookieConsent.name'),
     googleTagManagerKey,
     breadcrumbs: [],
+    showBreadcrumbs: false,
+    // Leave showBackLink unset. layouts/form.njk defaults it to true, and a
+    // page sets false to hide the back link. page.njk treats an unset value as off.
+    backLinkText: 'Back',
+    backLinkHref: '#',
     navigation: buildNavigation(request),
     getAssetPath(asset) {
       if (!config.get('isProduction')) {

@@ -1,0 +1,46 @@
+import {
+  exampleConfirmationPageController,
+  exampleHomePageController,
+  exampleQuestionButtonModController,
+  exampleQuestionPageController,
+  exampleStartPageController
+} from './controller.js'
+
+/**
+ * Sets up the routes used in the /demo pages.
+ * These routes are registered in src/server/router.js.
+ */
+export const demo = {
+  plugin: {
+    name: 'demo',
+    register(server) {
+      server.route([
+        {
+          method: 'GET',
+          path: '/demo/example-home-page',
+          ...exampleHomePageController
+        },
+        {
+          method: 'GET',
+          path: '/demo/example-start-page',
+          ...exampleStartPageController
+        },
+        {
+          method: ['GET', 'POST'],
+          path: '/demo/example-question-page',
+          ...exampleQuestionPageController
+        },
+        {
+          method: ['GET', 'POST'],
+          path: '/demo/example-question-button-mod',
+          ...exampleQuestionButtonModController
+        },
+        {
+          method: 'GET',
+          path: '/demo/example-confirmation-page',
+          ...exampleConfirmationPageController
+        }
+      ])
+    }
+  }
+}
